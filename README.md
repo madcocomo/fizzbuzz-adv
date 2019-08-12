@@ -22,9 +22,9 @@ etc up to 100
 <summary>Challenge 2</summary>
 Add a line wrap at every 14 characters.
 
-Sample output:
-1, 2, Fizz, 4,
- Buzz, Fizz, 7
-, 8, Fizz, Buz
+Sample output:<br>
+1, 2, Fizz, 4,<br>
+ Buzz, Fizz, 7<br>
+, 8, Fizz, Buz<br>
 ...
 </details>
