@@ -8,6 +8,7 @@ pipeline {
             steps {
                 sh 'mvn clean package'
                 junit '**/target/surefire-reports/TEST-*.xml'
+                sh 'git config --local credential.helper "!p() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; p"'
             }
         }
         stage('Verify') {
@@ -17,10 +18,16 @@ pipeline {
                     for (int i = 0; i < tests.length; i++) {
                         stage("Test ${tests[i]}") {
                             //git 'https://github.com/madcocomo/jenkins-at.git/'
-                            sh "echo ${tests[i]} > x.txt"
+                            writeFile file: 'x.txt', text: tests[i]
                             sh 'java -jar target/*.jar > result.txt'
                             sh 'diff x.txt result.txt'
-                            writeFile file: tests[i], text: 'aaa'
+
+                            sh 'git tag -f t111'
+                            withCredentials([
+                              usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+                            ]) {
+                              sh 'git push origin --tags'
+                            }
                         }
                     }                    
                 }
