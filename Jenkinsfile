@@ -18,7 +18,7 @@ pipeline {
                     for (int i = 0; i < tests.length; i++) {
                         stage("Test ${tests[i]}") {
                             //git 'https://github.com/madcocomo/jenkins-at.git/'
-                            writeFile file: 'x.txt', text: tests[i]
+                            sh "echo ${tests[i]} > x.txt"
                             sh 'java -jar target/*.jar > result.txt'
                             sh 'diff x.txt result.txt'
 
