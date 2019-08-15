@@ -9,4 +9,15 @@ public class FizzBuzzTest {
     public void testExample() {
         assertEquals(1, 1);
     }
+
+
+    @Test
+    public void catch_exception_or_test() {
+        try {
+            throw new IllegalArgumentException("aaa");
+
+        } catch (IllegalArgumentException | NullPointerException e) {
+
+        }
+    }
 }
