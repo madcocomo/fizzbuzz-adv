@@ -20,11 +20,7 @@ pipeline {
                             sh "echo ${tests[i]} > x.txt"
                             sh 'java -jar target/*.jar > result.txt'
                             sh 'diff x.txt result.txt'
-                            post {
-                              success {
-                                writeFile file: tests[i], text: 'aaa'
-                              }
-                            }
+                            writeFile file: tests[i], text: 'aaa'
                         }
                     }                    
                 }
