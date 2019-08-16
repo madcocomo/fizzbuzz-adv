@@ -17,7 +17,7 @@ pipeline {
                     //git 'https://github.com/madcocomo/jenkins-at.git/'
                     def tests = 'v1,v2,v3,v4,v5'.split(',')
 
-                    def tags = sh script: "git tag --merged" returnStdout: true
+                    def tags = sh script: "git tag --merged", returnStdout: true
                     def success = false
                     for (test in tests) {
                         stage("Test ${test}") {
