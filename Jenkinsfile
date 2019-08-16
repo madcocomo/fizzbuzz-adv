@@ -15,20 +15,23 @@ pipeline {
             steps {
                 script {
                     def tests = 'v1,v2,v3,v4,v5'.split(',')
-                    for (int i = 0; i < tests.length; i++) {
-                        stage("Test ${tests[i]}") {
+                    def success = false
+                    for (test in tests) {
+                        stage("Test ${test}") {
                             //git 'https://github.com/madcocomo/jenkins-at.git/'
-                            sh "echo ${tests[i]} > x.txt"
-                            sh 'java -jar target/*.jar > result.txt'
-                            sh 'diff x.txt result.txt'
+                            sh "echo ${test} > expect"
+                            sh 'java -jar target/*.jar > result'
+                            sh 'diff expect result'
 
-                            sh 'git tag -f t111'
+                            sh "git tag ${BRANCH_NAME}-pass-${test}-${startTimeInMillis}"
                             withCredentials([
                               usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
                             ]) {
                               sh 'git push origin --tags'
                             }
+                            success = true
                         }
+                        if (success) break;
                     }                    
                 }
             }
