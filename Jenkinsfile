@@ -14,22 +14,26 @@ pipeline {
         stage('Verify') {
             steps {
                 script {
+                    //git 'https://github.com/madcocomo/jenkins-at.git/'
                     def tests = 'v1,v2,v3,v4,v5'.split(',')
+
+                    def tags = sh script: "git tag --merged" returnStdout: true
                     def success = false
                     for (test in tests) {
                         stage("Test ${test}") {
-                            //git 'https://github.com/madcocomo/jenkins-at.git/'
-                            sh "echo ${test} > expect"
-                            sh 'java -jar target/*.jar > result'
-                            sh 'diff expect result'
+                            if (!(tags ==~ /(?s).*-pass-${test}-.*/)) {
+                                sh "echo ${test} > expect"
+                                sh 'java -jar target/*.jar > result'
+                                sh 'diff expect result'
 
-                            sh "git tag ${BRANCH_NAME}-pass-${test}-${BUILD_ID}"
-                            withCredentials([
-                              usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
-                            ]) {
-                              sh 'git push origin --tags'
+                                sh "git tag ${BRANCH_NAME}-pass-${test}-${BUILD_ID}"
+                                withCredentials([
+                                  usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
+                                ]) {
+                                  sh 'git push origin --tags'
+                                }
+                                success = true
                             }
-                            success = true
                         }
                         if (success) break;
                     }                    
