@@ -23,7 +23,7 @@ pipeline {
                             sh 'java -jar target/*.jar > result'
                             sh 'diff expect result'
 
-                            sh "git tag ${BRANCH_NAME}-pass-${test}-${startTimeInMillis}"
+                            sh "git tag ${BRANCH_NAME}-pass-${test}-${BUILD_ID}"
                             withCredentials([
                               usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')
                             ]) {
