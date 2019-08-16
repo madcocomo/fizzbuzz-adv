@@ -21,7 +21,9 @@ pipeline {
                     def success = false
                     for (test in tests) {
                         stage("Test ${test}") {
-                            if (!(tags ==~ /(?s).*-pass-${test}-.*/)) {
+                            if (tags ==~ /(?s).*-pass-${test}-.*/) {
+                                echo "Passed before"
+                            } else {
                                 sh "echo ${test} > expect"
                                 sh 'java -jar target/*.jar > result'
                                 sh 'diff expect result'
@@ -33,6 +35,7 @@ pipeline {
                                   sh 'git push origin --tags'
                                 }
                                 success = true
+                                echo "Passed"
                             }
                         }
                         if (success) break;
