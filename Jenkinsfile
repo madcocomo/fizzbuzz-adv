@@ -11,7 +11,7 @@ pipeline {
                 sh 'git config --local credential.helper "!p() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; p"'
 
                 script {
-                    def tests = test-jobs.names()
+                    def tests = testJobs.names()
 
                     def tags = sh script: "git tag --merged", returnStdout: true
                     def success = false
