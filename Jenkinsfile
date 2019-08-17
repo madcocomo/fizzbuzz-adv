@@ -39,7 +39,7 @@ pipeline {
                             }
                         }
                         if (success) break;
-                    }                    
+                    }
                 }
             }
         }
