@@ -10,7 +10,6 @@ pipeline {
                 junit '**/target/surefire-reports/TEST-*.xml'
                 sh 'git config --local credential.helper "!p() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; p"'
 
-            steps {
                 script {
                     def tests = test-jobs.names()
 
