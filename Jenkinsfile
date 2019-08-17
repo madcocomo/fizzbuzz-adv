@@ -9,13 +9,10 @@ pipeline {
                 sh 'mvn clean package'
                 junit '**/target/surefire-reports/TEST-*.xml'
                 sh 'git config --local credential.helper "!p() { echo username=\\$GIT_USERNAME; echo password=\\$GIT_PASSWORD; }; p"'
-            }
-        }
-        stage('Verify') {
+
             steps {
                 script {
-                    //git 'https://github.com/madcocomo/jenkins-at.git/'
-                    def tests = 'v1,v2,v3,v4,v5'.split(',')
+                    def tests = test-jobs.names()
 
                     def tags = sh script: "git tag --merged", returnStdout: true
                     def success = false
