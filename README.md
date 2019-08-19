@@ -4,7 +4,6 @@
 - Switch roles after each TDD cycle
 - Finish the challenge 1 by 1. Do not read all tasks ahead
 - Create branch with your group name
-- Once you finish a Challenge, push code to branch with tag like: v1. The number is challenge id
 
 ### Scenario: Implement a Fizz Buzz game
 Challenge 1
