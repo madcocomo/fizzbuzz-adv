@@ -19,3 +19,14 @@ Sample output:
 ```
 etc up to 100
 
+
+#### Challenge 2
+Add a line wrap at every 14 characters.
+Sample output:
+```
+1, 2, Fizz, 4,
+ Buzz, Fizz, 7
+, 8, Fizz, Buz
+...
+```
+
