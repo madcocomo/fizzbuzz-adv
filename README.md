@@ -31,3 +31,4 @@ Sample output:
 </pre>
 </details>
 print "v2"
+print "v3"
