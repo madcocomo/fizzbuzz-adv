@@ -9,7 +9,7 @@ pipeline {
                 sh 'mvn clean package'
                 junit '**/target/surefire-reports/TEST-*.xml'
                 script {
-                    testJobs.runTests(this)
+                    testJobs.runTests(this, testcases.fizzbuzz())
                 }
             }
         }
